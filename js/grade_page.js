@@ -37,7 +37,6 @@ function extractGradeMap() {
 
   for (let i = 2; i < rows.length; i++) { // skip header
     const cols = rows[i].querySelectorAll("td");
-
     // Current VTOP grade table has 7 columns (excluding View Mark column)
     if (cols.length < 7) continue;
 
