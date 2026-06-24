@@ -264,6 +264,59 @@ function myMain(evt) {
     var submitB = document.getElementById("submitBtn");
     solve(img, textB);
     submitB.focus();
+  } else if (document.URL.match("registration.vitap.ac.in")) {
+    const jsInitChecktimer = setInterval(checkForJS_Finish, 111);
+    function checkForJS_Finish() {
+      // Flexible captcha image detection — try multiple selectors
+      var element = document.getElementById("captcha_id") ||
+                    document.querySelector('img[alt*="captcha" i]') ||
+                    document.querySelector("img.captcha-image-frame") ||
+                    document.querySelector(".captcha-container img");
+      if (element) {
+        clearInterval(jsInitChecktimer);
+        var img = element;
+        img.style.height = "40px!important";
+        img.style.width = "200px!important";
+        // Flexible captcha input detection
+        var textB = document.getElementById("captchaString") ||
+                    document.getElementById("captchaCheck") ||
+                    document.getElementById("captchaStr") ||
+                    document.querySelector(".captcha-input") ||
+                    document.querySelector('input[name*="captcha"]');
+        // Flexible submit button detection
+        var submitB = document.getElementById("loginButton") ||
+                      document.getElementById("submitBtn") ||
+                      document.querySelector('button[type="submit"]');
+        if (textB) {
+          solve(img, textB);
+          if (submitB) submitB.focus();
+        }
+        // Flexible captcha container detection for refresh observer
+        var captchaContainer = document.getElementById("test") ||
+                               document.querySelector(".captcha-container");
+        if (captchaContainer) {
+          let observer = new MutationObserver(function () {
+            var newImg = document.getElementById("captcha_id") ||
+                         captchaContainer.querySelector('img[alt*="captcha" i]') ||
+                         captchaContainer.querySelector("img.captcha-image-frame") ||
+                         captchaContainer.querySelector("img");
+            var newInput = document.getElementById("captchaString") ||
+                           document.getElementById("captchaCheck") ||
+                           document.getElementById("captchaStr") ||
+                           document.querySelector(".captcha-input") ||
+                           document.querySelector('input[name*="captcha"]');
+            if (newImg && newInput) {
+              newImg.style.height = "40px!important";
+              newImg.style.width = "200px!important";
+              solve(newImg, newInput);
+            }
+          });
+          observer.observe(captchaContainer, {
+            childList: true
+          });
+        }
+      }
+    }
   } else {
     var img = document.getElementById("captcha_id");
     img.style.height = "40px!important";
