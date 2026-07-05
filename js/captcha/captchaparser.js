@@ -279,7 +279,6 @@ function myMain(evt) {
         img.style.width = "200px!important";
         // Flexible captcha input detection
         var textB = document.getElementById("captchaString") ||
-                    document.getElementById("captchaCheck") ||
                     document.getElementById("captchaStr") ||
                     document.querySelector(".captcha-input") ||
                     document.querySelector('input[name*="captcha"]');
