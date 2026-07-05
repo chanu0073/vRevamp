@@ -52,8 +52,7 @@
         "js/captcha/refreshTillCaptcha.js"
       ],
       "matches": [
-        "https://vtop.vitap.ac.in/vtop/login",
-        "https://registration.vitap.ac.in/*"
+        "https://vtop.vitap.ac.in/vtop/login"
       ]
     }
   ],
