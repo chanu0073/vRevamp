@@ -264,6 +264,29 @@ function myMain(evt) {
     var submitB = document.getElementById("submitBtn");
     solve(img, textB);
     submitB.focus();
+  } else if (location.hostname === "registration.vitap.ac.in") {
+    function solveRegistrationCaptcha() {
+      var img = document.getElementById("captcha_id") ||
+                  document.querySelector('img[name="imgCaptcha"]');
+      var textB = document.getElementById("captchaString") ||
+                  document.getElementById("captchaStringProgInfo");
+      if (img && textB) {
+        img.style.setProperty("height", "40px", "important");
+        img.style.setProperty("width", "200px", "important");
+        solve(img, textB);
+        var submitB = document.getElementById("loginButton") ||
+                      document.querySelector(".btn-action-proceed");
+        if (submitB) submitB.focus();
+      }
+    }
+    solveRegistrationCaptcha();
+    var captchaContainer = document.getElementById("test");
+    if (captchaContainer) {
+      var observer = new MutationObserver(function () {
+        solveRegistrationCaptcha();
+      });
+      observer.observe(captchaContainer, { childList: true });
+    }
   } else {
     var img = document.getElementById("captcha_id");
     img.style.height = "40px!important";
