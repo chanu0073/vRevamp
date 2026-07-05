@@ -255,15 +255,27 @@ function myMain(evt) {
       }
     }
   } else if (document.URL.match("https://vtop.vitap.ac.in/vtop/login")) {
-    var img = document.getElementsByClassName(
-      "form-control img-fluid bg-light border-0"
-    )[0];
-    img.style.height = "40px!important";
-    img.style.width = "200px!important";
-    var textB = document.getElementById("captchaStr");
-    var submitB = document.getElementById("submitBtn");
-    solve(img, textB);
-    submitB.focus();
+    function solveVtopLoginCaptcha() {
+      var img = document.getElementsByClassName(
+        "form-control img-fluid bg-light border-0"
+      )[0];
+      var textB = document.getElementById("captchaStr");
+      if (img && textB) {
+        img.style.setProperty("height", "40px", "important");
+        img.style.setProperty("width", "200px", "important");
+        solve(img, textB);
+        var submitB = document.getElementById("submitBtn");
+        if (submitB) submitB.focus();
+      }
+    }
+    solveVtopLoginCaptcha();
+    var captchaBlock = document.getElementById("captchaBlock");
+      if(captchaBlock) {
+        var observer = new MutationObserver(function () {
+          solveVtopLoginCaptcha();
+        });
+        observer.observe(captchaBlock, { childList: true });
+      }
   } else if (location.hostname === "registration.vitap.ac.in") {
     function solveRegistrationCaptcha() {
       var img = document.getElementById("captcha_id") ||
